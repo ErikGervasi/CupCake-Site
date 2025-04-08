@@ -1,93 +1,77 @@
-const inputs = document.querySelectorAll('input[type="number"]');
+const sabores = document.querySelectorAll('.sabor');
 const listaPedido = document.getElementById("listaPedido");
 const totalPedido = document.getElementById("totalPedido");
 const resumoModal = document.getElementById("resumoModal");
 
-inputs.forEach(input => input.addEventListener("input", atualizarResumo));
+sabores.forEach(sabor => {
+  const input = sabor.querySelector('input');
+  input.addEventListener('input', atualizarResumo);
+});
 
-function calcularPrecoUnitario(qtdTotal) {
-  if (qtdTotal >= 100) return 4.50;
-  if (qtdTotal >= 50) return 5.00;
-  if (qtdTotal >= 21) return 5.50;
-  return 6.00;
+function obterPrecoUnitario(qtd, precos) {
+  if (qtd >= 100) return precos[3];
+  if (qtd >= 50) return precos[2];
+  if (qtd >= 21) return precos[1];
+  return precos[0];
 }
 
 function atualizarResumo() {
-  let total = 0;
+  let totalGeral = 0;
+  let totalValor = 0;
   let resumo = "";
-  let pedido = [];
 
-  inputs.forEach(input => {
+  sabores.forEach(sabor => {
+    const nome = sabor.dataset.sabor;
+    const precos = JSON.parse(sabor.dataset.precos);
+    const input = sabor.querySelector('input');
     const quantidade = parseInt(input.value) || 0;
-    const nome = input.previousElementSibling.previousElementSibling.innerText;
+
     if (quantidade > 0) {
-      pedido.push({ nome, quantidade });
-      total += quantidade;
+      const precoUnit = obterPrecoUnitario(quantidade, precos);
+      const subtotal = precoUnit * quantidade;
+
+      resumo += `<p>${quantidade}x ${nome} - R$ ${subtotal.toFixed(2).replace('.', ',')}</p>`;
+      totalGeral += quantidade;
+      totalValor += subtotal;
     }
-  });
-
-  const precoUnitario = calcularPrecoUnitario(total);
-  let precoTotal = total * precoUnitario;
-
-  pedido.forEach(item => {
-    resumo += `<p>${item.quantidade}x ${item.nome}</p>`;
   });
 
   listaPedido.innerHTML = resumo;
-  totalPedido.innerText = `Total (${total} unidades): R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
+  totalPedido.innerText = `Total (${totalGeral} unidades): R$ ${totalValor.toFixed(2).replace('.', ',')}`;
 }
 
 function mostrarModal() {
-  let total = 0;
-  let pedido = [];
-  let html = "";
-
-  inputs.forEach(input => {
-    const quantidade = parseInt(input.value) || 0;
-    const nome = input.previousElementSibling.previousElementSibling.innerText;
-    if (quantidade > 0) {
-      pedido.push({ nome, quantidade });
-      total += quantidade;
-    }
-  });
-
-  if (total === 0) {
+  if (totalPedido.innerText === 'Total: R$ 0,00') {
     alert("Escolha ao menos um sabor!");
     return;
   }
 
-  const precoUnitario = calcularPrecoUnitario(total);
-  const precoTotal = total * precoUnitario;
-
-  pedido.forEach(item => {
-    html += `<p>${item.quantidade}x ${item.nome}</p>`;
-  });
-
-  html += `<p style='margin-top:1rem; font-weight:bold;'>Total: R$ ${precoTotal.toFixed(2).replace('.', ',')}</p>`;
-
-  resumoModal.innerHTML = html;
+  resumoModal.innerHTML = listaPedido.innerHTML + `<p style="margin-top:1rem; font-weight:bold;">${totalPedido.innerText}</p>`;
   document.getElementById("modalResumo").style.display = "flex";
 }
 
 function enviarWhatsApp() {
   let mensagem = "Olá! Gostaria de fazer o seguinte pedido:%0A";
   let total = 0;
+  let valorTotal = 0;
 
-  inputs.forEach(input => {
+  sabores.forEach(sabor => {
+    const nome = sabor.dataset.sabor;
+    const precos = JSON.parse(sabor.dataset.precos);
+    const input = sabor.querySelector('input');
     const quantidade = parseInt(input.value) || 0;
-    const nome = input.previousElementSibling.previousElementSibling.innerText;
+
     if (quantidade > 0) {
-      mensagem += `${quantidade}x ${nome}%0A`;
+      const preco = obterPrecoUnitario(quantidade, precos);
+      const subtotal = preco * quantidade;
+      mensagem += `${quantidade}x ${nome} - R$ ${subtotal.toFixed(2).replace('.', ',')}%0A`;
       total += quantidade;
+      valorTotal += subtotal;
     }
   });
 
-  const precoUnitario = calcularPrecoUnitario(total);
-  const precoTotal = total * precoUnitario;
-  mensagem += `%0ATotal (${total} unidades): R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
-
-  const numeroTelefone = '5547999767706'; 
-  const url = `https://wa.me/${numeroTelefone}?text=${mensagem}`;
+  mensagem += `%0ATotal (${total} unidades): R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+  const url = `https://wa.me/5547999767706?text=${mensagem}`;
   window.open(url, '_blank');
   document.getElementById("modalResumo").style.display = "none";
 }
