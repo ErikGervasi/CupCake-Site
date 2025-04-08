@@ -4,144 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Monte seu Pedido - Cupcakes</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 2rem;
-      background: #fff5f8;
-      color: #333;
-    }
-    h1 {
-      color: #d94f70;
-    }
-    .info-preco {
-      margin: 1rem 0 2rem;
-      background: #fff0f5;
-      padding: 1rem;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      color: #444;
-    }
-    .sabores {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .sabor {
-      background: #fff;
-      border-radius: 10px;
-      padding: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .sabor img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 0.5rem;
-    }
-    .sabor label {
-      font-weight: bold;
-      margin-bottom: 0.25rem;
-      text-align: center;
-    }
-    .descricao {
-      font-size: 0.9rem;
-      color: #666;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-    input[type="number"] {
-      width: 60px;
-      padding: 0.25rem;
-      text-align: center;
-    }
-    .resumo {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .total {
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-top: 1rem;
-    }
-    button {
-      margin-top: 1rem;
-      background: #d94f70;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-    }
-    .modal-content h2 {
-      margin-top: 0;
-    }
-    .modal-content p {
-      margin: 0.5rem 0;
-    }
-    .modal-content .botoes {
-      margin-top: 1.5rem;
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Monte seu Pedido</h1>
+  <div>
+    <img src="/logo.png" alt="Logo da empresa" class="logo" />
+  </div>
+ 
+  
   <div class="info-preco">
+    <h1>Monte seu Pedido</h1>
     <strong>Valores por unidade:</strong><br>
-    Até 20 unidades: R$ 6,00<br>
-    De 21 a 49 unidades: R$ 5,50<br>
-    A partir de 50 unidades: R$ 5,00
+    Até 20 unidades: <strong>R$6,00</strong><br>
+    De 21 a 49 unidades: <strong>R$5,50</strong><br>
+    De 50 a 99 unidades: <strong>R$5,00</strong><br>
+    A partir de 100 unidades: <strong>R$4,50</strong>
   </div>
   <div class="sabores">
     <div class="sabor">
       <img src="/cupcake_10_unidades_807_1_237245d169b73c5f8ebc5fb66321c337.jpg" alt="Red Velvet">
       <label for="redvelvet">Red Velvet</label>
-      <div class="descricao">Massa vermelha aveludada com cobertura de cream cheese.</div>
+      <div class="descricao">Massa vermelha aveludada com recheio e cobertura de chocolate branco com cream cheese.</div>
       <input type="number" id="redvelvet" min="0" value="0" />
     </div>
     <div class="sabor">
       <img src="/cupcake_10_unidades_807_1_237245d169b73c5f8ebc5fb66321c337.jpg" alt="Caramelo">
-      <label for="caramelo">Caramelo</label>
+      <label for="caramelo">Caramelo Salgado</label>
       <div class="descricao">Cupcake de baunilha com recheio e cobertura de caramelo salgado.</div>
       <input type="number" id="caramelo" min="0" value="0" />
     </div>
     <div class="sabor">
-      <img src="/cupcake_10_unidades_807_1_237245d169b73c5f8ebc5fb66321c337.jpg" alt="Brigadeiro">
-      <label for="brigadeiro">Brigadeiro</label>
+      <img src="/cupcake_10_unidades_807_1_237245d169b73c5f8ebc5fb66321c337.jpg" alt="chocolate">
+      <label for="chocolate">Chocolate</label>
       <div class="descricao">Tradicional sabor de chocolate com cobertura de granulado.</div>
-      <input type="number" id="brigadeiro" min="0" value="0" />
+      <input type="number" id="chocolate" min="0" value="0" />
     </div>
     <div class="sabor">
       <img src="/cupcake_10_unidades_807_1_237245d169b73c5f8ebc5fb66321c337.jpg" alt="Nutella">
-      <label for="nutella">Nutella</label>
+      <label for="nutella">Ninho com Nutella</label>
+      <div class="descricao">Delicioso cupcake com recheio e cobertura de Nutella.</div>
+      <input type="number" id="nutella" min="0" value="0" />
+    </div>
+    <div class="sabor">
+      <img src="/cupcake_10_unidades_807_1_237245d169b73c5f8ebc5fb66321c337.jpg" alt="Nutella">
+      <label for="nutella">Pistache</label>
       <div class="descricao">Delicioso cupcake com recheio e cobertura de Nutella.</div>
       <input type="number" id="nutella" min="0" value="0" />
     </div>
@@ -162,100 +69,5 @@
       </div>
     </div>
   </div>
-
-  <script>
-    const inputs = document.querySelectorAll('input[type="number"]');
-    const listaPedido = document.getElementById("listaPedido");
-    const totalPedido = document.getElementById("totalPedido");
-    const resumoModal = document.getElementById("resumoModal");
-
-    inputs.forEach(input => input.addEventListener("input", atualizarResumo));
-
-    function calcularPrecoUnitario(qtdTotal) {
-      if (qtdTotal >= 50) return 5.00;
-      if (qtdTotal >= 21) return 5.50;
-      return 6.00;
-    }
-
-    function atualizarResumo() {
-      let total = 0;
-      let resumo = "";
-      let pedido = [];
-
-      inputs.forEach(input => {
-        const quantidade = parseInt(input.value) || 0;
-        const nome = input.previousElementSibling.previousElementSibling.innerText;
-        if (quantidade > 0) {
-          pedido.push({ nome, quantidade });
-          total += quantidade;
-        }
-      });
-
-      const precoUnitario = calcularPrecoUnitario(total);
-      let precoTotal = total * precoUnitario;
-
-      pedido.forEach(item => {
-        resumo += `<p>${item.quantidade}x ${item.nome}</p>`;
-      });
-
-      listaPedido.innerHTML = resumo;
-      totalPedido.innerText = `Total (${total} unidades): R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
-    }
-
-    function mostrarModal() {
-      let total = 0;
-      let pedido = [];
-      let html = "";
-
-      inputs.forEach(input => {
-        const quantidade = parseInt(input.value) || 0;
-        const nome = input.previousElementSibling.previousElementSibling.innerText;
-        if (quantidade > 0) {
-          pedido.push({ nome, quantidade });
-          total += quantidade;
-        }
-      });
-
-      if (total === 0) {
-        alert("Escolha ao menos um sabor!");
-        return;
-      }
-
-      const precoUnitario = calcularPrecoUnitario(total);
-      const precoTotal = total * precoUnitario;
-
-      pedido.forEach(item => {
-        html += `<p>${item.quantidade}x ${item.nome}</p>`;
-      });
-
-      html += `<p style='margin-top:1rem; font-weight:bold;'>Total: R$ ${precoTotal.toFixed(2).replace('.', ',')}</p>`;
-
-      resumoModal.innerHTML = html;
-      document.getElementById("modalResumo").style.display = "flex";
-    }
-
-    function enviarWhatsApp() {
-      let mensagem = "Olá! Gostaria de fazer o seguinte pedido:%0A";
-      let total = 0;
-
-      inputs.forEach(input => {
-        const quantidade = parseInt(input.value) || 0;
-        const nome = input.previousElementSibling.previousElementSibling.innerText;
-        if (quantidade > 0) {
-          mensagem += `${quantidade}x ${nome}%0A`;
-          total += quantidade;
-        }
-      });
-
-      const precoUnitario = calcularPrecoUnitario(total);
-      const precoTotal = total * precoUnitario;
-      mensagem += `%0ATotal (${total} unidades): R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
-
-      const numeroTelefone = '5547999767706'; // Número de telefone atualizado com DDI +55 e DDD 47
-      const url = `https://wa.me/${numeroTelefone}?text=${mensagem}`;
-      window.open(url, '_blank');
-      document.getElementById("modalResumo").style.display = "none";
-    }
-  </script>
 </body>
 </html>
